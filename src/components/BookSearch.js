@@ -6,28 +6,28 @@ import * as BooksAPI from "../BooksAPI";
 class BookSearch extends Component {
   state = {
     query: "",
-    foundBooks: []
+    foundBooks: [],
+    noHits: false
   };
 
   searchBooks = event => {
     const query = event.target.value;
     this.setState({ query });
 
-    // if user input => run the search
+    //  user input => search for books
     if (query) {
-      BooksAPI.search(query.trim(), 20).then(books => {
-        console.log(books);
+      BooksAPI.search(query.trim(), 30).then(books => {
         books.length > 0
-          ? this.setState({ foundBooks: books })
-          : this.setState({ foundBooks: [] });
+          ? this.setState({ foundBooks: books, noHits: false })
+          : this.setState({ foundBooks: [], noHits: true });
       });
 
-      // if query is empty => reset state to default
-    } else this.setState({ newBooks: [] });
+      // query is empty => reset state
+    } else this.setState({ newBooks: [], noHits: false });
   };
 
   render() {
-    const { query, foundBooks } = this.state;
+    const { query, foundBooks, noHits } = this.state;
 
     return (
       <div className="search-books">
@@ -61,6 +61,13 @@ class BookSearch extends Component {
                 ))}
               </ol>
             </div>
+          )}
+          {//Display message when no books were found for query
+          noHits && (
+            <h3>
+              No books were found for your query.
+              <span style={{ display: "block" }}>Please try again.</span>
+            </h3>
           )}
         </div>
       </div>
