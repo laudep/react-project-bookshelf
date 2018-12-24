@@ -8,16 +8,18 @@ class Book extends Component {
 
   render() {
     const { book } = this.props;
+    const coverPlaceHolder = "http://i.imgur.com/J5LVHEL.jpg";
+
+    const thumbnail =
+      book.imageLinks && book.imageLinks.thumbnail
+        ? book.imageLinks.thumbnail
+        : coverPlaceHolder;
 
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193 }}>
-            <img
-              alt=""
-              src={book.imageLinks.thumbnail}
-              style={{ width: 128, height: 193 }}
-            />
+            <img alt="" src={thumbnail} style={{ width: 128, height: 193 }} />
           </div>
           <div className="book-shelf-changer">
             <select defaultValue={book.shelf}>
