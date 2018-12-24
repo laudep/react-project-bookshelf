@@ -7,18 +7,20 @@ class Book extends Component {
   };
 
   render() {
+    const { book } = this.props;
+
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193 }}>
             <img
               alt=""
-              src={this.props.book.imageURL}
+              src={book.imageLinks.thumbnail}
               style={{ width: 128, height: 193 }}
             />
           </div>
           <div className="book-shelf-changer">
-            <select defaultValue={this.props.book.shelf}>
+            <select defaultValue={book.shelf}>
               <option value="none" disabled>
                 Move to...
               </option>
@@ -29,8 +31,13 @@ class Book extends Component {
             </select>
           </div>
         </div>
-        <div className="book-title">{this.props.book.title}</div>
-        <div className="book-authors">{this.props.book.authors}</div>
+        <div className="book-title">{book.title}</div>
+        {book.authors &&
+          book.authors.map((author, index) => (
+            <div className="book-authors" key={index}>
+              {author}
+            </div>
+          ))}
       </div>
     );
   }
