@@ -1,13 +1,32 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Book from "./Book";
+import * as BooksAPI from "../BooksAPI";
 
 class BookSearch extends Component {
   state = {
-    query: ""
+    query: "",
+    foundBooks: []
+  };
+
+  searchBooks = event => {
+    const query = event.target.value;
+    this.setState({ query });
+
+    // if user input => run the search
+    if (query) {
+      BooksAPI.search(query.trim(), 20).then(books => {
+        books.length > 0
+          ? this.setState({ foundBooks: books })
+          : this.setState({ foundBooks: [] });
+      });
+
+      // if query is empty => reset state to default
+    } else this.setState({ newBooks: [] });
   };
 
   render() {
-    const { query } = this.state;
+    const { query, foundBooks } = this.state;
 
     return (
       <div className="search-books">
@@ -27,11 +46,21 @@ class BookSearch extends Component {
               type="text"
               placeholder="Search by title or author"
               value={query}
+              onChange={this.searchBooks}
             />
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
+          {foundBooks.length > 0 && (
+            <div>
+              <h3>Found {foundBooks.length} books </h3>
+              <ol className="books-grid">
+                {foundBooks.map(book => (
+                  <Book book={book} />
+                ))}
+              </ol>
+            </div>
+          )}
         </div>
       </div>
     );
