@@ -16,7 +16,7 @@ class BookSearch extends Component {
 
     //  user input => search for books
     if (query) {
-      BooksAPI.search(query.trim(), 30).then(books => {
+      BooksAPI.search(query.trim(), 20).then(books => {
         books.length > 0
           ? this.setState({ foundBooks: books, noHits: false })
           : this.setState({ foundBooks: [], noHits: true });
@@ -57,7 +57,7 @@ class BookSearch extends Component {
               <h3>Found {foundBooks.length} books </h3>
               <ol className="books-grid">
                 {foundBooks.map(book => (
-                  <Book book={book} />
+                  <Book key={book.id} book={book} />
                 ))}
               </ol>
             </div>
