@@ -20,7 +20,6 @@ class BooksApp extends React.Component {
       // update state with the changed book
       this.setState(prevState => ({
         books: prevState.books
-          // avoid duplicates: remove updated book if it already exists
           .filter(book => book.id !== updatedBook.id)
           .concat(updatedBook)
       }));
@@ -31,8 +30,18 @@ class BooksApp extends React.Component {
     const { books } = this.state;
     return (
       <div className="app">
-        <Route path="/search" render={() => <BookSearch />} />
-        <Route exact path="/" render={() => <BookList books={books} />} />
+        F
+        <Route
+          path="/search"
+          render={() => <BookSearch updateShelf={this.updateShelf} />}
+        />
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <BookList books={books} updateShelf={this.updateShelf} />
+          )}
+        />
       </div>
     );
   }

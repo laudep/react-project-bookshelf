@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 
 class BookList extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    updateShelf: PropTypes.func.isRequired
   };
 
   state = { shelfChange: false };
 
   render() {
-    const { books, changeShelf } = this.props;
+    const { books, updateShelf } = this.props;
     const shelves = [
       { type: "currentlyReading", title: "Currently Reading" },
       { type: "wantToRead", title: "Want to Read" },
@@ -31,7 +32,7 @@ class BookList extends Component {
                 key={shelf.type}
                 title={shelf.title}
                 books={shelfBooks}
-                changeShelf={changeShelf}
+                updateShelf={updateShelf}
               />
             );
           })}

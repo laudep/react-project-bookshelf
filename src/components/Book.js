@@ -3,8 +3,12 @@ import PropTypes from "prop-types";
 
 class Book extends Component {
   static propTypes = {
-    book: PropTypes.object.isRequired
+    book: PropTypes.object.isRequired,
+    updateShelf: PropTypes.func.isRequired
   };
+
+  updateShelf = event =>
+    this.props.updateShelf(this.props.book, event.target.value);
 
   render() {
     const { book } = this.props;
@@ -22,7 +26,7 @@ class Book extends Component {
             <img alt="" src={thumbnail} style={{ width: 128, height: 193 }} />
           </div>
           <div className="book-shelf-changer">
-            <select defaultValue={book.shelf}>
+            <select defaultValue={book.shelf} onChange={this.updateShelf}>
               <option value="none" disabled>
                 Move to...
               </option>
@@ -36,7 +40,7 @@ class Book extends Component {
         <div className="book-title">{book.title}</div>
         {book.authors &&
           book.authors.map((author, index) => (
-            <div className="book-authors" key={index}>
+            <div key={index} className="book-authors">
               {author}
             </div>
           ))}

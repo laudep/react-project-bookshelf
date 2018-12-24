@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Book from "./Book";
 import * as BooksAPI from "../BooksAPI";
 
 class BookSearch extends Component {
+  static propTypes = {
+    updateShelf: PropTypes.func.isRequiredF
+  };
+
   state = {
     query: "",
     foundBooks: [],
@@ -57,7 +62,11 @@ class BookSearch extends Component {
               <h3>Found {foundBooks.length} books </h3>
               <ol className="books-grid">
                 {foundBooks.map(book => (
-                  <Book key={book.id} book={book} />
+                  <Book
+                    key={book.id}
+                    book={book}
+                    updateShelf={this.props.updateShelf}
+                  />
                 ))}
               </ol>
             </div>
