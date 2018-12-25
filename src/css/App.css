@@ -17,7 +17,7 @@ body,
 
 .list-books-title {
   padding: 10px 0;
-  background: #2e7c31;
+  background: #3f51b5;
   text-align: center;
 }
 
@@ -61,7 +61,7 @@ body,
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #2e7d32;
+  background: #3f51b5;
   background-image: url("../icons/add.svg");
   background-repeat: no-repeat;
   background-position: center;
@@ -72,7 +72,7 @@ body,
 }
 
 .open-search button:hover {
-  background-color: rgb(0, 102, 0);
+  background-color: #757de8;
 }
 
 /* search page */
@@ -171,7 +171,7 @@ button:active {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #60ac5d;
+  background: #757de8;
   background-image: url("../icons/arrow-drop-down.svg");
   background-repeat: no-repeat;
   background-position: center;
