@@ -142,6 +142,11 @@ button:active {
 
 .book {
   width: 140px;
+  transition: 0.2s all;
+}
+
+.book:hover {
+  transform: scale(1.25);
 }
 
 .book-title,
