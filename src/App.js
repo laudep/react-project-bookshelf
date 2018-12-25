@@ -1,7 +1,7 @@
 import React from "react";
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import BookList from "./components/BookList";
 import BookSearch from "./components/BookSearch";
 
@@ -23,6 +23,9 @@ class BooksApp extends React.Component {
           .filter(book => book.id !== updatedBook.id)
           .concat(updatedBook)
       }));
+      // navigate to home page after adding a book
+      this.props.history.location.pathname !== "/" &&
+        this.props.history.push("/");
     });
   };
 
@@ -30,7 +33,6 @@ class BooksApp extends React.Component {
     const { books } = this.state;
     return (
       <div className="app">
-        F
         <Route
           path="/search"
           render={() => <BookSearch updateShelf={this.updateShelf} />}
@@ -47,4 +49,4 @@ class BooksApp extends React.Component {
   }
 }
 
-export default BooksApp;
+export default withRouter(BooksApp);

@@ -6,7 +6,7 @@ import * as BooksAPI from "../BooksAPI";
 
 class BookSearch extends Component {
   static propTypes = {
-    updateShelf: PropTypes.func.isRequiredF
+    updateShelf: PropTypes.func.isRequired
   };
 
   state = {
