@@ -22,7 +22,9 @@ By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
 ## Using the application
 
 - Books are sorted into different categories, each of which are displayed on a different 'shelf'
+
 - Click on the button on the book cover to change a book's category or remove a book from the list
+
 - To add new books click the button on the bottom right of the page.  
   Enter a search term. Found books can be added using the buttons on the book covers.
 
