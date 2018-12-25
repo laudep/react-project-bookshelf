@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import coverPlaceHolder from "../images/image_not_available.png";
 
 class Book extends Component {
   static propTypes = {
@@ -12,7 +13,6 @@ class Book extends Component {
 
   render() {
     const { book } = this.props;
-    const coverPlaceHolder = "http://i.imgur.com/J5LVHEL.jpg";
 
     const thumbnail =
       book.imageLinks && book.imageLinks.thumbnail
