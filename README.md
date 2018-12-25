@@ -19,14 +19,18 @@ npm start
 A new browser window will open automatically.  
 By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
 
+![MyReads screenshot](screenshots/myreads_overview.png "App sceenshot")
+
 ## Using the application
 
 - Books are sorted into different categories, each of which are displayed on a different 'shelf'
 
 - Click on the button on the book cover to change a book's category or remove a book from the list
+  ![Change shelf screenshot](screenshots/change_shelf.png "Change shelf sceenshot")
 
 - To add new books click the button on the bottom right of the page.  
-  Enter a search term. Found books can be added using the buttons on the book covers.
+   Enter a search term. Found books can be added using the buttons on the book covers.
+  ![Searvh results screenshot](screenshots/search_results.png "Search results sceenshot")
 
 Note: The backend API is limited to a particular set of [search terms](#search-terms)
 (see [below](#Important) for more information).
