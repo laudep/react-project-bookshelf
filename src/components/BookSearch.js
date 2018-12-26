@@ -6,12 +6,14 @@ import * as BooksAPI from "../BooksAPI";
 
 class BookSearch extends Component {
   static propTypes = {
-    updateShelf: PropTypes.func.isRequired
+    updateShelf: PropTypes.func.isRequired,
+    booksOnShelf: PropTypes.array.isRequired
   };
 
   state = {
     query: "",
     foundBooks: [],
+    booksOnShelf: [],
     noHits: false
   };
 
@@ -21,9 +23,16 @@ class BookSearch extends Component {
 
     //  user input => search for books
     if (query) {
-      BooksAPI.search(query.trim(), 20).then(books => {
-        books.length > 0
-          ? this.setState({ foundBooks: books, noHits: false })
+      BooksAPI.search(query.trim(), 20).then(foundBooks => {
+        for (let foundBook of foundBooks) {
+          // make sure books in result list show correct shelf
+          this.state.booksOnShelf
+            .filter(shelfBook => shelfBook.id === foundBook.id)
+            .map(shelfBook => (foundBook.shelf = shelfBook.shelf));
+        }
+
+        foundBooks.length > 0
+          ? this.setState({ foundBooks: foundBooks, noHits: false })
           : this.setState({ foundBooks: [], noHits: true });
       });
 
@@ -33,6 +42,7 @@ class BookSearch extends Component {
 
   render() {
     const { query, foundBooks, noHits } = this.state;
+    const { booksOnShelf } = this.props;
 
     return (
       <div className="search-books">
@@ -65,6 +75,7 @@ class BookSearch extends Component {
                   <Book
                     key={book.id}
                     book={book}
+                    books={booksOnShelf}
                     updateShelf={this.props.updateShelf}
                   />
                 ))}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
+import { SHELF_TYPE } from "../Constants";
 
 class BookList extends Component {
   static propTypes = {
@@ -13,11 +14,6 @@ class BookList extends Component {
 
   render() {
     const { books, updateShelf } = this.props;
-    const shelves = [
-      { type: "currentlyReading", title: "Currently Reading" },
-      { type: "wantToRead", title: "Want to Read" },
-      { type: "read", title: "Read" }
-    ];
 
     return (
       <div className="list-books">
@@ -25,17 +21,18 @@ class BookList extends Component {
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          {shelves.map((shelf, index) => {
-            const shelfBooks = books.filter(book => book.shelf === shelf.type);
-            return (
-              <BookShelf
-                key={shelf.type}
-                title={shelf.title}
-                books={shelfBooks}
-                updateShelf={updateShelf}
-              />
-            );
-          })}
+          {Object.keys(SHELF_TYPE)
+            .filter(key => key !== SHELF_TYPE.none.id)
+            .map((shelfId, index) => {
+              return (
+                <BookShelf
+                  key={index}
+                  shelf={SHELF_TYPE[shelfId]}
+                  books={books}
+                  updateShelf={updateShelf}
+                />
+              );
+            })}
         </div>
         <div className="open-search">
           <Link to="/search">

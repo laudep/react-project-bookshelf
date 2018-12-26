@@ -1,21 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import coverPlaceHolder from "../images/image_not_available.png";
-import { SHELF_TYPE } from "../Constants";
+import ShelfChanger from "./ShelfChanger";
 
 class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
+    books: PropTypes.array.isRequired,
     updateShelf: PropTypes.func.isRequired
   };
 
-  updateShelf = event => {
-    this.props.book.shelf !== event.target.value &&
-      this.props.updateShelf(this.props.book, event.target.value);
-  };
-
   render() {
-    const { book } = this.props;
+    const { book, books, updateShelf } = this.props;
 
     const thumbnail =
       book.imageLinks && book.imageLinks.thumbnail
@@ -28,18 +24,7 @@ class Book extends Component {
           <div className="book-cover" style={{ width: 128, height: 193 }}>
             <img alt="" src={thumbnail} style={{ width: 128, height: 193 }} />
           </div>
-          <div className="book-shelf-changer">
-            <select defaultValue={book.shelf} onChange={this.updateShelf}>
-              <option value="none" disabled>
-                Move to...
-              </option>
-              {Object.keys(SHELF_TYPE).map(type => (
-                <option key={type} value={type}>
-                  {SHELF_TYPE[type].text}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ShelfChanger book={book} books={books} updateShelf={updateShelf} />
         </div>
         <div className="book-title">{book.title}</div>
         {book.authors &&
