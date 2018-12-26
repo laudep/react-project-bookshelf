@@ -31,7 +31,7 @@ class ShelfChanger extends Component {
         <select onChange={this.updateShelf} defaultValue={currentShelf}>
           <option disabled>Move to...</option>
           {Object.keys(SHELF_TYPE).map(type => (
-            <option key={type} value={type}>
+            <option key={type} value={SHELF_TYPE[type].id}>
               {SHELF_TYPE[type].text}
             </option>
           ))}

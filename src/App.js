@@ -23,13 +23,15 @@ class BooksApp extends React.Component {
     );
   }
 
-  batchUpdate = shelfId => {
+  batchUpdate = (shelfId, booksToUpdate) => {
     if (shelfId === "deselect") return this.deselectAll();
-    !!shelfId &&
-      this.updateMultiple(
+    if (!shelfId) return;
+
+    this.updateMultiple(
+      booksToUpdate ||
         this.state.books.filter(book => book.isSelected === true),
-        shelfId
-      );
+      shelfId
+    );
   };
 
   deselectAll = () => {
@@ -55,6 +57,7 @@ class BooksApp extends React.Component {
       changedBook.shelf = shelfId;
       changedBook.isSelected = false;
       // eslint-disable-next-line no-loop-func
+
       BooksAPI.update(changedBook, shelfId).then(response => {
         updateCount++;
         const bookIndex = books.findIndex(
@@ -129,6 +132,10 @@ class BooksApp extends React.Component {
         ? `${count} books were removed.`
         : `${count} books were updated.`;
 
+    // navigate to home page after multi update
+    this.props.history.location.pathname !== "/" &&
+      this.props.history.push("/");
+
     this.displayUpdateToast(toastText);
   };
 
@@ -152,9 +159,13 @@ class BooksApp extends React.Component {
         <Route
           path="/search"
           render={() => (
-            <BookSearch booksOnShelf={books} updateShelf={this.updateShelf} />
+            <BookSearch
+              booksOnShelf={books}
+              updateShelf={this.updateShelf}
+              batchUpdate={this.batchUpdate}
+            />
           )}
-        />{" "}
+        />
         <Route
           exact
           path="/"

@@ -1,48 +1,63 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import Book from "./Book";
+import PropTypes from "prop-types";
 import * as BooksAPI from "../BooksAPI";
+import Book from "./Book";
+import MultiShelfChanger from "./MultiShelfChanger";
 
 class BookSearch extends Component {
   static propTypes = {
     updateShelf: PropTypes.func.isRequired,
-    booksOnShelf: PropTypes.array.isRequired
+    booksOnShelf: PropTypes.array.isRequired,
+    batchUpdate: PropTypes.func.isRequired
   };
 
   state = {
     query: "",
     foundBooks: [],
-    booksOnShelf: [],
     noHits: false
   };
 
-  searchBooks = event => {
+  batchUpdate = shelfId => {
+    const selectedBooks = this.state.foundBooks.filter(
+      book => book.isSelected === true
+    );
+    this.props.batchUpdate(shelfId, selectedBooks);
+  };
+
+  handleSearch = event => {
     const query = event.target.value;
+    this.searchBooks(query);
+  };
+
+  searchBooks = query => {
     this.setState({ query });
 
     //  user input => search for books
     if (query) {
       BooksAPI.search(query.trim(), 20).then(foundBooks => {
-        for (let foundBook of foundBooks) {
-          // make sure books in result list show correct shelf
-          this.state.booksOnShelf
-            .filter(shelfBook => shelfBook.id === foundBook.id)
-            .map(shelfBook => (foundBook.shelf = shelfBook.shelf));
+        if (foundBooks.length > 0) {
+          for (let foundBook of foundBooks) {
+            // make sure books in result list show correct shelf
+            this.props.booksOnShelf
+              .filter(shelfBook => shelfBook.id === foundBook.id)
+              .map(shelfBook => (foundBook.shelf = shelfBook.shelf));
+          }
         }
-
         foundBooks.length > 0
           ? this.setState({ foundBooks: foundBooks, noHits: false })
           : this.setState({ foundBooks: [], noHits: true });
       });
 
       // query is empty => reset state
-    } else this.setState({ newBooks: [], noHits: false });
+    } else this.setState({ foundBooks: [], noHits: false });
   };
 
   render() {
     const { query, foundBooks, noHits } = this.state;
     const { booksOnShelf } = this.props;
+    const selectedCount = foundBooks.filter(book => book.isSelected === true)
+      .length;
 
     return (
       <div className="search-books">
@@ -62,7 +77,7 @@ class BookSearch extends Component {
               type="text"
               placeholder="Search by title or author"
               value={query}
-              onChange={this.searchBooks}
+              onChange={this.handleSearch}
             />
           </div>
         </div>
@@ -88,6 +103,12 @@ class BookSearch extends Component {
               No books were found for your query.
               <span style={{ display: "block" }}>Please try again.</span>
             </h3>
+          )}
+          {selectedCount > 0 && (
+            <MultiShelfChanger
+              selectedCount={selectedCount}
+              batchUpdate={this.batchUpdate}
+            />
           )}
         </div>
       </div>
