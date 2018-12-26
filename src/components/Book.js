@@ -10,19 +10,38 @@ class Book extends Component {
     updateShelf: PropTypes.func.isRequired
   };
 
+  state = { isSelected: false };
+
+  handleClick = event => {
+    // this.setState(prevState => ({
+    //   isSelected: !prevState.isSelected
+    // }));
+    this.props.book.isSelected = !!!this.props.book.isSelected;
+    this.props.updateShelf(this.props.book);
+  };
+
   render() {
     const { book, books, updateShelf } = this.props;
-
     const thumbnail =
       book.imageLinks && book.imageLinks.thumbnail
         ? book.imageLinks.thumbnail
         : coverPlaceHolder;
+    const borderStyle = book.isSelected ? "10px solid #999" : "";
 
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193 }}>
-            <img alt="" src={thumbnail} style={{ width: 128, height: 193 }} />
+            <img
+              alt=""
+              src={thumbnail}
+              style={{
+                width: 128,
+                height: 193,
+                border: borderStyle
+              }}
+              onClick={this.handleClick}
+            />
           </div>
           <ShelfChanger book={book} books={books} updateShelf={updateShelf} />
         </div>

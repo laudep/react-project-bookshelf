@@ -7,14 +7,22 @@ import { SHELF_TYPE } from "../Constants";
 class BookList extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    updateShelf: PropTypes.func.isRequired
+    updateShelf: PropTypes.func.isRequired,
+    batchUpdate: PropTypes.func.isRequired
   };
 
-  state = { shelfChange: false };
+  batchUpdate = event => {
+    this.props.batchUpdate(event.target.value);
+  };
+
+  handleDeselect = event => {
+    event.target.value === "deselect" &&
+      this.props.batchUpdate(event.target.value);
+  };
 
   render() {
     const { books, updateShelf } = this.props;
-
+    const selectedCount = books.filter(book => book.isSelected === true).length;
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -39,6 +47,24 @@ class BookList extends Component {
             <button />
           </Link>
         </div>
+
+        {books.filter(
+          book => book.isSelected === true && book.shelf !== SHELF_TYPE.none.id
+        ).length > 0 && (
+          <div className="change-multiple">
+            <select onChange={this.batchUpdate}>
+              <option value="deselect">Deselect all ({selectedCount})</option>
+              <option disabled selected>
+                Move to...
+              </option>
+              {Object.keys(SHELF_TYPE).map(type => (
+                <option key={type} value={type}>
+                  {SHELF_TYPE[type].text}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
     );
   }
