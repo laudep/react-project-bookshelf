@@ -1,12 +1,13 @@
 import React from "react";
+import { Route, withRouter } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 import * as BooksAPI from "./BooksAPI";
 import "./css/App.css";
-import { Route, withRouter } from "react-router-dom";
+import { css } from "glamor";
 import BookList from "./components/BookList";
 import BookSearch from "./components/BookSearch";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
-import { css } from "glamor";
+import { SHELF_TYPE } from "./Constants";
 
 class BooksApp extends React.Component {
   state = { books: [] };
@@ -16,10 +17,11 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then(books => this.setState({ books }));
   }
 
-  updateShelf = (updatedBook, shelfName) => {
-    BooksAPI.update(updatedBook, shelfName).then(response => {
+  updateShelf = (updatedBook, shelfId) => {
+    BooksAPI.update(updatedBook, shelfId).then(response => {
+      const oldShelf = updatedBook.shelf || SHELF_TYPE.none.id;
       // set correct shelf for (new or updated) book
-      updatedBook.shelf = shelfName;
+      updatedBook.shelf = shelfId;
       // update state with the changed book
       this.setState(prevState => ({
         books: prevState.books
@@ -27,22 +29,17 @@ class BooksApp extends React.Component {
           .concat(updatedBook)
       }));
 
-      this.displayUpdateToast(this.props.history.location.pathname, shelfName);
-
-      // navigate to home page after adding a book
-      shelfName !== "none" &&
-        this.props.history.location.pathname !== "/" &&
-        this.props.history.push("/");
+      this.displayUpdateToast(oldShelf, shelfId);
     });
   };
 
-  displayUpdateToast = (currentPath, shelfName) => {
+  displayUpdateToast = (oldShelf, newShelf) => {
     let toastText = null;
-    if (currentPath !== "/" && shelfName !== "none") {
+    if (oldShelf === SHELF_TYPE.none.id) {
       toastText = "Book added.";
-    } else if (currentPath === "/" && shelfName === "none") {
-      toastText = "Book has been removed";
-    } else if (currentPath === "/") {
+    } else if (newShelf === SHELF_TYPE.none.id) {
+      toastText = "Book has been removed.";
+    } else {
       toastText = "Book has been updated.";
     }
 
@@ -72,6 +69,7 @@ class BooksApp extends React.Component {
             <BookList books={books} updateShelf={this.updateShelf} />
           )}
         />
+        <ToastContainer />
       </div>
     );
   }

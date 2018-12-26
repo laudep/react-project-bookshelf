@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import coverPlaceHolder from "../images/image_not_available.png";
+import { SHELF_TYPE } from "../Constants";
 
 class Book extends Component {
   static propTypes = {
@@ -8,8 +9,10 @@ class Book extends Component {
     updateShelf: PropTypes.func.isRequired
   };
 
-  updateShelf = event =>
-    this.props.updateShelf(this.props.book, event.target.value);
+  updateShelf = event => {
+    this.props.book.shelf !== event.target.value &&
+      this.props.updateShelf(this.props.book, event.target.value);
+  };
 
   render() {
     const { book } = this.props;
@@ -18,21 +21,6 @@ class Book extends Component {
       book.imageLinks && book.imageLinks.thumbnail
         ? book.imageLinks.thumbnail
         : coverPlaceHolder;
-
-    const shelfType = {
-      currentlyReading: {
-        text: "Currently Reading"
-      },
-      wantToRead: {
-        text: "Want to Read"
-      },
-      read: {
-        text: "Read"
-      },
-      none: {
-        text: "None"
-      }
-    };
 
     return (
       <div className="book">
@@ -45,9 +33,9 @@ class Book extends Component {
               <option value="none" disabled>
                 Move to...
               </option>
-              {Object.keys(shelfType).map(type => (
+              {Object.keys(SHELF_TYPE).map(type => (
                 <option key={type} value={type}>
-                  {shelfType[type].text}
+                  {SHELF_TYPE[type].text}
                 </option>
               ))}
             </select>
