@@ -19,10 +19,21 @@ class BookSearch extends Component {
   };
 
   batchUpdate = shelfId => {
+    if (shelfId === "deselect") return this.deselectAll();
     const selectedBooks = this.state.foundBooks.filter(
       book => book.isSelected === true
     );
     this.props.batchUpdate(shelfId, selectedBooks);
+  };
+
+  deselectAll = () => {
+    let books = this.state.foundBooks;
+    for (let book of books) {
+      book.isSelected = false;
+    }
+    this.setState({
+      books: books
+    });
   };
 
   handleSearch = event => {
