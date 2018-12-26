@@ -145,11 +145,14 @@ button:active {
 
 .book {
   width: 140px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   transition: 0.2s all;
 }
 
 .book:hover {
-  transform: scale(1.25);
+  transform: scale(1.15);
+  z-index: 5;
 }
 
 .book-title,
