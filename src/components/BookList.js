@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 class BookList extends Component {
   static propTypes = {
@@ -42,6 +43,7 @@ class BookList extends Component {
             <button />
           </Link>
         </div>
+        <ToastContainer />
       </div>
     );
   }

@@ -4,6 +4,9 @@ import "./css/App.css";
 import { Route, withRouter } from "react-router-dom";
 import BookList from "./components/BookList";
 import BookSearch from "./components/BookSearch";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+import { css } from "glamor";
 
 class BooksApp extends React.Component {
   state = { books: [] };
@@ -23,12 +26,36 @@ class BooksApp extends React.Component {
           .filter(book => book.id !== updatedBook.id)
           .concat(updatedBook)
       }));
+
+      this.displayUpdateToast(this.props.history.location.pathname, shelfName);
+
       // navigate to home page after adding a book
-      this.props.history.location.pathname !== "/" &&
+      shelfName !== "none" &&
+        this.props.history.location.pathname !== "/" &&
         this.props.history.push("/");
     });
   };
 
+  displayUpdateToast = (currentPath, shelfName) => {
+    let toastText = null;
+    if (currentPath !== "/" && shelfName !== "none") {
+      toastText = "Book added.";
+    } else if (currentPath === "/" && shelfName === "none") {
+      toastText = "Book has been removed";
+    } else if (currentPath === "/") {
+      toastText = "Book has been updated.";
+    }
+
+    !!toastText &&
+      toast(toastText, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: css({
+          background: "#757de8",
+          color: "white",
+          fontWeight: "bold"
+        })
+      });
+  };
   render() {
     const { books } = this.state;
     return (
