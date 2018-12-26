@@ -19,6 +19,21 @@ class Book extends Component {
         ? book.imageLinks.thumbnail
         : coverPlaceHolder;
 
+    const shelfType = {
+      currentlyReading: {
+        text: "Currently Reading"
+      },
+      wantToRead: {
+        text: "Want to Read"
+      },
+      read: {
+        text: "Read"
+      },
+      none: {
+        text: "None"
+      }
+    };
+
     return (
       <div className="book">
         <div className="book-top">
@@ -30,10 +45,11 @@ class Book extends Component {
               <option value="none" disabled>
                 Move to...
               </option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
+              {Object.keys(shelfType).map(type => (
+                <option key={type} value={type}>
+                  {shelfType[type].text}
+                </option>
+              ))}
             </select>
           </div>
         </div>
