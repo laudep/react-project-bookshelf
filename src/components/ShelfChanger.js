@@ -20,7 +20,7 @@ class ShelfChanger extends Component {
     // make sure book displays correct shelf
     let currentShelf = SHELF_TYPE.none.id;
     for (let shelfBook of books) {
-      if (shelfBook.id === book.id) {
+      if (shelfBook.id === book.id && !!shelfBook.shelf) {
         currentShelf = shelfBook.shelf;
         break;
       }
@@ -29,9 +29,7 @@ class ShelfChanger extends Component {
     return (
       <div className="book-shelf-changer">
         <select onChange={this.updateShelf} defaultValue={currentShelf}>
-          <option value="none" disabled>
-            Move to...
-          </option>
+          <option disabled>Move to...</option>
           {Object.keys(SHELF_TYPE).map(type => (
             <option key={type} value={type}>
               {SHELF_TYPE[type].text}
