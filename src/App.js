@@ -47,19 +47,17 @@ class BooksApp extends React.Component {
    * @memberof BooksApp
    */
   deselectAll = () => {
-    let books = this.state.books;
-    for (let book of books) {
-      book.isSelected = false;
-    }
-    this.setState(prevState => ({
-      books: books
-    }));
+    this.setState(prevState => {
+      let booksUpdated = prevState.books;
+      for (let book of booksUpdated) book.isSelected = false;
+      return { books: booksUpdated };
+    });
   };
 
   /**
    * Update multiple books
    *
-   * @param {Array.<Object>} updatedBooks list of books to update
+   * @param {Array.<Object>} [updatedBooks] list of books to update
    * @param {string} shelfId id of the new shelf
    * @memberof BooksApp
    */
@@ -69,30 +67,47 @@ class BooksApp extends React.Component {
       return this.updateShelf(updatedBooks[0], shelfId);
 
     let updateCount = 0,
-      books = this.state.books,
       changedBooks = updatedBooks.filter(book => book.shelf !== shelfId);
 
     if (changedBooks.length < 1) return;
 
     for (let changedBook of changedBooks) {
-      changedBook.shelf = shelfId;
-      changedBook.isSelected = false;
       // eslint-disable-next-line no-loop-func
       BooksAPI.update(changedBook, shelfId).then(response => {
         updateCount++;
-        const bookIndex = books.findIndex(
-          oldBook => oldBook.id === changedBook.id
-        );
-        if (bookIndex > -1) books[bookIndex] = changedBook;
-        else {
-          books = books.concat(changedBook);
-        }
+        // Update state after all API calls are complete
         updateCount === changedBooks.length &&
-          this.setState({ books: books }, () =>
-            this.toastMultibook(changedBooks.length, shelfId)
-          );
+          this.updateBooksState(changedBooks, shelfId);
       });
     }
+  };
+
+  /**
+   * Update  books state
+   *
+   * @param {Array.<Object>} [updatedBooks] list of books to update
+   * @param {string} shelfId id of the new shelf
+   * @memberof BooksApp
+   */
+  updateBooksState = (updateBooks, shelfId) => {
+    this.setState(prevState => {
+      let prevBooks = prevState.books;
+      for (const book of updateBooks) {
+        let bookIndex = prevBooks.findIndex(oldBook => oldBook.id === book.id);
+
+        let updatedBook = bookIndex > -1 ? prevBooks[bookIndex] : book;
+        updatedBook.isSelected = false;
+        updatedBook.shelf = shelfId;
+
+        if (bookIndex > -1) {
+          prevBooks[bookIndex] = updatedBook;
+        } else {
+          prevBooks = prevBooks.concat(updatedBook);
+        }
+      }
+      return { books: prevBooks };
+    });
+    this.toastMultibook(updateBooks.length, shelfId);
   };
 
   /**
@@ -112,7 +127,6 @@ class BooksApp extends React.Component {
       this.setState({
         books: updatedBooks
       });
-
       return;
     }
     if (updatedBook.shelf === shelfId) return;
@@ -209,7 +223,7 @@ class BooksApp extends React.Component {
               batchUpdate={this.batchUpdate}
             />
           )}
-        />{" "}
+        />
         <Route
           exact
           path="/"
@@ -220,7 +234,7 @@ class BooksApp extends React.Component {
               batchUpdate={this.batchUpdate}
             />
           )}
-        />{" "}
+        />
         <ToastContainer />
       </div>
     );
