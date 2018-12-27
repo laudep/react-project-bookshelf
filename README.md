@@ -30,7 +30,13 @@ By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
 
 - To add new books click the button on the bottom right of the page.  
    Enter a search term. Found books can be added using the buttons on the book covers.
-  ![Searvh results screenshot](screenshots/search_results.png "Search results sceenshot")
+  ![Search results screenshot](screenshots/search_results.png "Search results sceenshot")
+
+- Multiple selection:  
+  Click on a book cover to select it. A frame appears around the book.  
+  After selecting one or more books the change multiple button appears at the bottom right.  
+  Using this button multiple books can be changed at once.  
+  ![Multi selection screenshots](screenshots/button_multi_selection.png "Multi selection sceenshot")
 
 Note: The backend API is limited to a particular set of [search terms](#search-terms)
 (see [below](#Important) for more information).
