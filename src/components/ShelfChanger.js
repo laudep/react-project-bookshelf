@@ -2,13 +2,28 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { SHELF_TYPE } from "../Constants";
 
+/**
+ * Button component for a single book with select options to move it.
+ *
+ * @class ShelfChanger
+ * @extends {Component}
+ */
 class ShelfChanger extends Component {
   static propTypes = {
+    /** Current book data. */
     book: PropTypes.object.isRequired,
+    /** All books currently on a shelf. */
     books: PropTypes.array.isRequired,
+    /** Handler for when a book is changed. */
     updateShelf: PropTypes.func.isRequired
   };
 
+  /**
+   * Handler for updating a book.
+   *
+   * @param {Event} event change event of the ShelfChanger select options
+   * @memberof ShelfChanger
+   */
   updateShelf = event => {
     this.props.book.shelf !== event.target.value &&
       this.props.updateShelf(this.props.book, event.target.value);

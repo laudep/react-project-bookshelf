@@ -3,19 +3,32 @@ import PropTypes from "prop-types";
 import coverPlaceHolder from "../images/image_not_available.png";
 import ShelfChanger from "./ShelfChanger";
 
+/**
+ * A single book cover image, title and authors,
+ * and a button to change the book shelf.
+ *
+ * @class Book
+ * @extends {Component}
+ */
 class Book extends Component {
   static propTypes = {
+    /** Current book data. */
     book: PropTypes.object.isRequired,
+    /** All books currently on a shelf. */
     books: PropTypes.array.isRequired,
+    /** Handler for when a book is changed. */
     updateShelf: PropTypes.func.isRequired
   };
 
   state = { isSelected: false };
 
+  /**
+   * Handler for clicks on a book cover image
+   *
+   *@param {event} event onClick event
+   * @memberof Book
+   */
   handleClick = event => {
-    // this.setState(prevState => ({
-    //   isSelected: !prevState.isSelected
-    // }));
     this.props.book.isSelected = !!!this.props.book.isSelected;
     this.props.updateShelf(this.props.book);
   };
@@ -43,8 +56,10 @@ class Book extends Component {
               onClick={this.handleClick}
             />
           </div>
+
           <ShelfChanger book={book} books={books} updateShelf={updateShelf} />
         </div>
+
         <div className="book-title">{book.title}</div>
         {book.authors &&
           book.authors.map((author, index) => (

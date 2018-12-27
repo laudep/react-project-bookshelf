@@ -5,10 +5,19 @@ import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
 import MultiShelfChanger from "./MultiShelfChanger";
 
+/**
+ * Search bar and list of book results
+ *
+ * @class BookSearch
+ * @extends {Component}
+ */
 class BookSearch extends Component {
   static propTypes = {
+    /** Function to handle book shelf changes. */
     updateShelf: PropTypes.func.isRequired,
+    /** All books currently on a shelf in the main book list. */
     booksOnShelf: PropTypes.array.isRequired,
+    /** Function to handle shelf changes of multiple books. */
     batchUpdate: PropTypes.func.isRequired
   };
 
@@ -18,14 +27,28 @@ class BookSearch extends Component {
     noHits: false
   };
 
+  /**
+   * Handle multi select changes in the BookSearch component
+   *
+   * @param {string} shelfId id of selected action
+   * @see MultiShelfChanger
+   * @memberof BookSearch
+   */
   batchUpdate = shelfId => {
+    // handle 'Deselect all'
     if (shelfId === "deselect") return this.deselectAll();
+    // Update shelf of selected books
     const selectedBooks = this.state.foundBooks.filter(
       book => book.isSelected === true
     );
     this.props.batchUpdate(shelfId, selectedBooks);
   };
 
+  /**
+   * Deselect all currently selected books in the BookSearch component
+   *
+   * @memberof BookSearch
+   */
   deselectAll = () => {
     let books = this.state.foundBooks;
     for (let book of books) {
@@ -36,14 +59,15 @@ class BookSearch extends Component {
     });
   };
 
+  /**
+   * Handle input in the book search bar
+   *
+   * @param {Event} event search bar input change event
+   * @memberof BookSearch
+   */
   handleSearch = event => {
     const query = event.target.value;
-    this.searchBooks(query);
-  };
-
-  searchBooks = query => {
     this.setState({ query });
-
     //  user input => search for books
     if (query) {
       BooksAPI.search(query.trim(), 20).then(foundBooks => {
@@ -55,6 +79,7 @@ class BookSearch extends Component {
               .map(shelfBook => (foundBook.shelf = shelfBook.shelf));
           }
         }
+        // update state
         foundBooks.length > 0
           ? this.setState({ foundBooks: foundBooks, noHits: false })
           : this.setState({ foundBooks: [], noHits: true });

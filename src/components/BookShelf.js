@@ -2,10 +2,19 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Book from "./Book";
 
+/**
+ * Component for virtual book shelf: grid of associated books.
+ *
+ * @class BookShelf
+ * @extends {Component}
+ */
 class BookShelf extends Component {
   static propTypes = {
+    /** Shelf data: id and text to display. */
     shelf: PropTypes.object.isRequired,
+    /** All books currently on a shelf. */
     books: PropTypes.array.isRequired,
+    /** Handler for when a book is changed. */
     updateShelf: PropTypes.func.isRequired
   };
 
