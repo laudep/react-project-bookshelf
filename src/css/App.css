@@ -61,6 +61,7 @@ body,
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  border-width: 0px;
   background: #3f51b5;
   background-image: url("../icons/add.svg");
   background-repeat: no-repeat;
