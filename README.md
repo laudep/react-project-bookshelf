@@ -16,7 +16,7 @@ Udacity.
   - [`getAll`](#getall)
   - [`update`](#update)
   - [`search`](#search)
-- [Search terms](#important)
+- [Search terms](#search-terms)
 - [Create React App](#create-react-app)
 
 ## Running the application
@@ -59,8 +59,8 @@ Using this button multiple books can be changed at once.
 
 ![Multi selection button](screenshots/button_multi_selection.png "Multi selection button")
 
-Note: The backend API is limited to a particular set of [search terms](#search-terms)
-(see [below](#Important) for more information).
+Note: The backend API is limited to a particular set of [search terms](SEARCH_TERMS.md)
+(see [below](#search-terms) for more information).
 
 ## Backend Server
 
@@ -107,7 +107,7 @@ search(query);
 - Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
 - These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
 
-## Important
+## Search terms
 
 The backend API uses a fixed set of cached search results and is limited to a
 particular set of search terms, which can be found in
