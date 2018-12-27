@@ -5,6 +5,20 @@ read, are currently reading, or want to read.
 The frontend is written in React and the utilizes a demo backend server run by
 Udacity.
 
+## Table of Contents
+
+- [Installation](#running-the-application)
+- [Usage](#using-the-application)
+  - [Shelves](#shelves)
+  - [Adding books](#adding-books)
+  - [Multiple selection](#multiple-selection)
+- [Backend server and BooksAPI](#backend-server)
+  - [`getAll`](#getall)
+  - [`update`](#update)
+  - [`search`](#search)
+- [Search terms](#important)
+- [Create React App](#create-react-app)
+
 ## Running the application
 
 Make sure to have [Node.js](https://nodejs.org/en/) installed.  
@@ -23,21 +37,27 @@ By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
 
 ## Using the application
 
+### Shelves
+
 - Books are sorted into different categories, each of which are displayed on a different 'shelf'.
 
 - Click on the button on the book cover to change a book's category or remove a book from the list.
   ![Change shelf screenshot](screenshots/change_shelf.png "Change shelf sceenshot")
 
-- To add new books click the button on the bottom right of the page.  
-   Enter a search term. Found books can be added using the buttons on the book covers.
-  ![Search results screenshot](screenshots/search_results.png "Search results sceenshot")
+### Adding books
 
-- Multiple selection:  
-  Click on a book cover to select it. A frame appears around the book.  
-  After selecting one or more books the change multiple button appears at the bottom right.  
-  Using this button multiple books can be changed at once.  
-  ![Selected books](screenshots/selected_books.png "Two selected books and an unselected book (right)")
-  ![Multi selection button](screenshots/button_multi_selection.png "Multi selection button")
+To add new books click the button on the bottom right of the page.  
+Enter a search term. Found books can be added using the buttons on the book covers.
+![Search results screenshot](screenshots/search_results.png "Search results sceenshot")
+
+### Multiple selection
+
+Click on a book cover to select it. A frame appears around the book.  
+After selecting one or more books the change multiple button appears at the bottom right.  
+Using this button multiple books can be changed at once.  
+![Selected books](screenshots/selected_books.png "Two selected books and an unselected book (right)")
+
+![Multi selection button](screenshots/button_multi_selection.png "Multi selection button")
 
 Note: The backend API is limited to a particular set of [search terms](#search-terms)
 (see [below](#Important) for more information).
