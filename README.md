@@ -23,9 +23,9 @@ By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
 
 ## Using the application
 
-- Books are sorted into different categories, each of which are displayed on a different 'shelf'
+- Books are sorted into different categories, each of which are displayed on a different 'shelf'.
 
-- Click on the button on the book cover to change a book's category or remove a book from the list
+- Click on the button on the book cover to change a book's category or remove a book from the list.
   ![Change shelf screenshot](screenshots/change_shelf.png "Change shelf sceenshot")
 
 - To add new books click the button on the bottom right of the page.  
@@ -36,7 +36,8 @@ By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
   Click on a book cover to select it. A frame appears around the book.  
   After selecting one or more books the change multiple button appears at the bottom right.  
   Using this button multiple books can be changed at once.  
-  ![Multi selection screenshots](screenshots/button_multi_selection.png "Multi selection sceenshot")
+  ![Selected books](screenshots/selected_books.png "Two selected books and an unselected book (right)")
+  ![Multi selection button](screenshots/button_multi_selection.png "Multi selection button")
 
 Note: The backend API is limited to a particular set of [search terms](#search-terms)
 (see [below](#Important) for more information).
