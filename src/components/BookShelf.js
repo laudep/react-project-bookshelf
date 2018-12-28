@@ -1,43 +1,41 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Book from "./Book";
 
 /**
- * Component for virtual book shelf: grid of associated books.
+ * Stateless component for virtual book shelf: grid of associated books.
  *
- * @class BookShelf
- * @extends {Component}
+ * @param {Object} props component properties
+ * @returns {Object} virtual DOM
  */
-class BookShelf extends Component {
-  static propTypes = {
-    /** Shelf data: id and text to display. */
-    shelf: PropTypes.object.isRequired,
-    /** All books currently on a shelf. */
-    books: PropTypes.array.isRequired,
-    /** Handler for when a book is changed. */
-    updateShelf: PropTypes.func.isRequired
-  };
+const BookShelf = props => (
+  <div className="bookshelf">
+    <h2 className="bookshelf-title">{props.shelf.text}</h2>
+    <div className="bookshelf-books">
+      <ol className="books-grid">
+        {props.books
+          .filter(book => book.shelf === props.shelf.id)
+          .map((book, index) => (
+            <li key={book.id}>
+              <Book
+                book={book}
+                updateShelf={props.updateShelf}
+                books={props.books}
+              />
+            </li>
+          ))}
+      </ol>
+    </div>
+  </div>
+);
 
-  render() {
-    const { shelf, books, updateShelf } = this.props;
-
-    return (
-      <div className="bookshelf">
-        <h2 className="bookshelf-title">{shelf.text}</h2>
-        <div className="bookshelf-books">
-          <ol className="books-grid">
-            {books
-              .filter(book => book.shelf === shelf.id)
-              .map((book, index) => (
-                <li key={book.id}>
-                  <Book book={book} updateShelf={updateShelf} books={books} />
-                </li>
-              ))}
-          </ol>
-        </div>
-      </div>
-    );
-  }
-}
+BookShelf.propTypes = {
+  /** Shelf data: id and text to display. */
+  shelf: PropTypes.object.isRequired,
+  /** All books currently on a shelf. */
+  books: PropTypes.array.isRequired,
+  /** Handler for when a book is changed. */
+  updateShelf: PropTypes.func.isRequired
+};
 
 export default BookShelf;
