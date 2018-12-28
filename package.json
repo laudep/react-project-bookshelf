@@ -1,6 +1,5 @@
 {
   "name": "myreads-app",
-  "homepage": "https://laudep.github.io/react-project-bookshelf/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,9 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "pretty-quick --staged",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "precommit": "pretty-quick --staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,7 +32,6 @@
   ],
   "devDependencies": {
     "eslint-plugin-prettier": "^3.0.0",
-    "gh-pages": "^2.0.1",
     "husky": "^1.2.1",
     "prettier": "1.15.3",
     "pretty-quick": "^1.8.0"
