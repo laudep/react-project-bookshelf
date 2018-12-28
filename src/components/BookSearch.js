@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { DebounceInput } from "react-debounce-input";
 import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
 import MultiShelfChanger from "./MultiShelfChanger";
@@ -109,10 +110,12 @@ class BookSearch extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-            <input
+
+            <DebounceInput
               type="text"
-              placeholder="Search by title or author"
               value={query}
+              minLength={3}
+              debounceTimeout={500}
               onChange={this.handleSearch}
             />
           </div>
