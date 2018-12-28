@@ -1,4 +1,4 @@
-# MyReads Project
+# React Bookshelf
 
 This project is a bookshelf app that allows users to catalogize books they've
 read, are currently reading, or want to read.  
