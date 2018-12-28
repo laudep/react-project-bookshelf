@@ -83,7 +83,7 @@ class BooksApp extends React.Component {
   };
 
   /**
-   * Update  books state
+   * Update books state
    *
    * @param {Array.<Object>} [updatedBooks] list of books to update
    * @param {string} shelfId id of the new shelf
@@ -118,15 +118,16 @@ class BooksApp extends React.Component {
    * @memberof BooksApp
    */
   updateShelf = (updatedBook, shelfId) => {
+    // If no shelfId is supplied update state with supplied book object
     if (typeof shelfId === "undefined") {
       const bookIndex = this.state.books.findIndex(
         book => book.id === updatedBook.id
       );
-      let updatedBooks = this.state.books;
-      updatedBooks[bookIndex] = updatedBook;
-      this.setState({
-        books: updatedBooks
-      });
+      bookIndex > -1 &&
+        this.setState(prevState => {
+          prevState.books[bookIndex] = updatedBook;
+          return { books: prevState.books };
+        });
       return;
     }
     if (updatedBook.shelf === shelfId) return;

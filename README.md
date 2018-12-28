@@ -1,7 +1,5 @@
 # MyReads Project
 
-[![Build Status](https://travis-ci.org/laudep/react-project-bookshelf.svg?branch=master)](https://travis-ci.org/laudep/react-project-bookshelf)
-
 This project is a bookshelf app that allows users to catalogize books they've
 read, are currently reading, or want to read.  
 The frontend is written in React and the utilizes a demo backend server run by
@@ -24,6 +22,8 @@ Udacity.
 
 ## Demo
 
+[![Build Status](https://travis-ci.org/laudep/react-project-bookshelf.svg?branch=master)](https://travis-ci.org/laudep/react-project-bookshelf)
+
 An online demo can be found here: [react-bookshelf.surge.sh](https://react-bookshelf.surge.sh/)
 
 ## Running the application
@@ -40,7 +40,7 @@ npm start
 A new browser window will open automatically.  
 By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
 
-![MyReads screenshot](screenshots/myreads_overview.png "App sceenshot")
+![MyReads screenshot](screenshots/bookshelf_overview.png "App sceenshot")
 
 ## Using the application
 
@@ -48,7 +48,7 @@ By default, the app runs in [http://localhost:3000/](http://localhost:3000/).
 
 - Books are sorted into different categories, each of which are displayed on a different 'shelf'.
 
-- Click on the button on the book cover to change a book's category or remove a book from the list.
+- Click on the button on the book cover to change a book's category or remove a book from the list.  
   ![Change shelf screenshot](screenshots/change_shelf.png "Change shelf sceenshot")
 
 ### Adding books
