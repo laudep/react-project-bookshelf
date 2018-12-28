@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, Switch } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import * as BooksAPI from "./BooksAPI";
@@ -7,6 +7,7 @@ import "./css/App.css";
 import { css } from "glamor";
 import BookList from "./components/BookList";
 import BookSearch from "./components/BookSearch";
+import NotFound from "./components/NotFound";
 import { SHELF_TYPE } from "./Constants";
 
 class BooksApp extends React.Component {
@@ -215,27 +216,30 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <Route
-          path="/search"
-          render={() => (
-            <BookSearch
-              booksOnShelf={books}
-              updateShelf={this.updateShelf}
-              batchUpdate={this.batchUpdate}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <BookList
-              books={books}
-              updateShelf={this.updateShelf}
-              batchUpdate={this.batchUpdate}
-            />
-          )}
-        />
+        <Switch>
+          <Route
+            path="/search"
+            render={() => (
+              <BookSearch
+                booksOnShelf={books}
+                updateShelf={this.updateShelf}
+                batchUpdate={this.batchUpdate}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <BookList
+                books={books}
+                updateShelf={this.updateShelf}
+                batchUpdate={this.batchUpdate}
+              />
+            )}
+          />
+          <Route component={NotFound} />
+        </Switch>
         <ToastContainer />
       </div>
     );
