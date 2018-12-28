@@ -245,3 +245,21 @@ button:active {
   opacity: 0;
   cursor: pointer;
 }
+
+/* not found page */
+
+.not-found-title {
+  padding: 10px 0;
+  color: #3f51b5;
+  text-align: center;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.not-found-image {
+  width: auto;
+  height: 33vw;
+  display: block;
+  margin: auto;
+  position: relative;
+}
