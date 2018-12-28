@@ -1,5 +1,7 @@
 # MyReads Project
 
+[![Build Status](https://travis-ci.org/laudep/react-project-bookshelf.svg?branch=master)](https://travis-ci.org/laudep/react-project-bookshelf)
+
 This project is a bookshelf app that allows users to catalogize books they've
 read, are currently reading, or want to read.  
 The frontend is written in React and the utilizes a demo backend server run by
