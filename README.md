@@ -7,6 +7,7 @@ Udacity.
 
 ## Table of Contents
 
+- [Demo](#demo)
 - [Installation](#running-the-application)
 - [Usage](#using-the-application)
   - [Shelves](#shelves)
@@ -18,6 +19,10 @@ Udacity.
   - [`search`](#search)
 - [Search terms](#search-terms)
 - [Create React App](#create-react-app)
+
+## Demo
+
+An online demo can be found here: [react-bookshelf.surge.sh](https://react-bookshelf.surge.sh/)
 
 ## Running the application
 
