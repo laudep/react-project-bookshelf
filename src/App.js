@@ -17,11 +17,10 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     // fetch books
-    BooksAPI.getAll().then(books =>
-      this.setState({
-        books
-      })
-    );
+    BooksAPI.getAll().then(books => {
+      for (let book of books) book.isSelected = false;
+      this.setState({ books });
+    });
   }
 
   /**
@@ -48,11 +47,12 @@ class BooksApp extends React.Component {
    * @memberof BooksApp
    */
   deselectAll = () => {
-    this.setState(prevState => {
-      let booksUpdated = prevState.books;
-      for (let book of booksUpdated) book.isSelected = false;
-      return { books: booksUpdated };
+    const booksUpdated = this.state.books.map(b => {
+      b.isSelected = false;
+      return b;
     });
+
+    this.setState({ books: booksUpdated });
   };
 
   /**
@@ -64,23 +64,28 @@ class BooksApp extends React.Component {
    */
   updateMultiple = (updatedBooks, shelfId) => {
     if (!updatedBooks || updatedBooks.length < 1 || !shelfId) return;
-    if (updatedBooks.length === 1)
-      return this.updateShelf(updatedBooks[0], shelfId);
 
-    let updateCount = 0,
-      changedBooks = updatedBooks.filter(book => book.shelf !== shelfId);
+    let changedBooks = updatedBooks
+      .filter(book => book.shelf !== shelfId)
+      .map(b => {
+        return b;
+      });
+
+    if (changedBooks.length === 1)
+      return this.updateShelf(changedBooks[0], shelfId);
 
     if (changedBooks.length < 1) return;
 
-    for (let changedBook of changedBooks) {
-      // eslint-disable-next-line no-loop-func
-      BooksAPI.update(changedBook, shelfId).then(response => {
-        updateCount++;
-        // Update state after all API calls are complete
-        updateCount === changedBooks.length &&
-          this.updateBooksState(changedBooks, shelfId);
+    var apiUpdates = changedBooks.map(function(changedBook) {
+      return new Promise(function(resolve) {
+        BooksAPI.update(changedBook, shelfId).then(response => {
+          resolve();
+        });
       });
-    }
+    });
+
+    // Update state after all API calls are complete
+    Promise.all(apiUpdates).then(this.updateBooksState(changedBooks, shelfId));
   };
 
   /**
@@ -100,11 +105,9 @@ class BooksApp extends React.Component {
         updatedBook.isSelected = false;
         updatedBook.shelf = shelfId;
 
-        if (bookIndex > -1) {
-          prevBooks[bookIndex] = updatedBook;
-        } else {
-          prevBooks = prevBooks.concat(updatedBook);
-        }
+        bookIndex > -1
+          ? (prevBooks[bookIndex] = updatedBook)
+          : (prevBooks = prevBooks.concat(updatedBook));
       }
       return { books: prevBooks };
     });
@@ -112,41 +115,49 @@ class BooksApp extends React.Component {
   };
 
   /**
+   * Toggle a book's selected state
+   *
+   * @param {string} bookId the id of the book to toggle
+   * @memberof BooksApp
+   */
+  toggleSelect = bookId => {
+    const booksUpdated = this.state.books.map(b => {
+      if (b.id === bookId) b.isSelected = !!!(b.isSelected || false);
+      return b;
+    });
+    this.setState({ books: booksUpdated });
+  };
+
+  /**
    * Update a book's current shelf.
    *
-   * @param {Object} updatedBook the updated book or book to be updated
+   * @param {Object} updatedBook the book to be updated
    * @param {string} [shelfId] id of the book's new shelf
    * @memberof BooksApp
    */
   updateShelf = (updatedBook, shelfId) => {
-    // If no shelfId is supplied update state with supplied book object
-    if (typeof shelfId === "undefined") {
-      const bookIndex = this.state.books.findIndex(
-        book => book.id === updatedBook.id
-      );
-      bookIndex > -1 &&
-        this.setState(prevState => {
-          prevState.books[bookIndex] = updatedBook;
-          return { books: prevState.books };
-        });
-      return;
-    }
     if (updatedBook.shelf === shelfId) return;
-    BooksAPI.update(updatedBook, shelfId).then(response => {
-      let oldShelf = SHELF_TYPE.none.id;
-      this.state.books
-        .filter(book => book.id === updatedBook.id)
-        .map(book => (oldShelf = book.shelf));
-      // set correct shelf for (new or updated) book
-      updatedBook.shelf = shelfId;
 
-      updatedBook.isSelected = false;
+    BooksAPI.update(updatedBook, shelfId).then(response => {
+      const oldShelf =
+        this.state.books
+          .filter(book => book.id === updatedBook.id)
+          .map(book => book.shelf)[0] || SHELF_TYPE.none.id;
+
       // update state with the changed book
       this.setState(prevState => ({
         books: prevState.books
           .filter(book => book.id !== updatedBook.id)
           .concat(updatedBook)
+          .map(book => {
+            // set correct shelf for (new or updated) book
+            book.id === updatedBook.id &&
+              (book.shelf = shelfId) &&
+              (book.isSelected = false);
+            return book;
+          })
       }));
+
       this.toastSingleBook(oldShelf, shelfId);
     });
   };
@@ -235,6 +246,7 @@ class BooksApp extends React.Component {
                 books={books}
                 updateShelf={this.updateShelf}
                 batchUpdate={this.batchUpdate}
+                toggleSelect={this.toggleSelect}
               />
             )}
           />

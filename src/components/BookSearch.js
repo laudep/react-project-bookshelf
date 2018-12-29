@@ -46,18 +46,27 @@ class BookSearch extends Component {
   };
 
   /**
+   * Toggle a book's selection state in the BookSearch component
+   *
+   * @memberof BookSearch
+   */
+  toggleSelect = bookId => {
+    const booksUpdated = this.state.foundBooks.map(b => {
+      if (b.id === bookId) b.isSelected = !!!(b.isSelected || false);
+      return b;
+    });
+    this.setState({ books: booksUpdated });
+  };
+
+  /**
    * Deselect all currently selected books in the BookSearch component
    *
    * @memberof BookSearch
    */
   deselectAll = () => {
     let books = this.state.foundBooks;
-    for (let book of books) {
-      book.isSelected = false;
-    }
-    this.setState({
-      books: books
-    });
+    for (let book of books) book.isSelected = false;
+    this.setState({ books: books });
   };
 
   /**
@@ -131,6 +140,7 @@ class BookSearch extends Component {
                     book={book}
                     books={booksOnShelf}
                     updateShelf={this.props.updateShelf}
+                    toggleSelect={this.toggleSelect}
                   />
                 ))}
               </ol>

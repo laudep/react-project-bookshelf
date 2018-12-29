@@ -21,6 +21,7 @@ const BookShelf = props => (
                 book={book}
                 updateShelf={props.updateShelf}
                 books={props.books}
+                toggleSelect={props.toggleSelect}
               />
             </li>
           ))}
@@ -34,8 +35,10 @@ BookShelf.propTypes = {
   shelf: PropTypes.object.isRequired,
   /** All books currently on a shelf. */
   books: PropTypes.array.isRequired,
-  /** Handler for when a book is changed. */
-  updateShelf: PropTypes.func.isRequired
+  /** Handler for when a book's shelf is changed. */
+  updateShelf: PropTypes.func.isRequired,
+  /** Handler for when a book is (de)selected. */
+  toggleSelect: PropTypes.func.isRequired
 };
 
 export default BookShelf;

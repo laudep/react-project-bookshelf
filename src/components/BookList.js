@@ -19,11 +19,13 @@ class BookList extends Component {
     /** Function to handle book shelf changes. */
     updateShelf: PropTypes.func.isRequired,
     /** Function to handle shelf changes of multiple books. */
-    batchUpdate: PropTypes.func.isRequired
+    batchUpdate: PropTypes.func.isRequired,
+    /** Handler for when a book is (de)selected. */
+    toggleSelect: PropTypes.func.isRequired
   };
 
   render() {
-    const { books, updateShelf, batchUpdate } = this.props;
+    const { books, updateShelf, batchUpdate, toggleSelect } = this.props;
     const selectedCount = books.filter(
       book => book.isSelected === true && book.shelf !== SHELF_TYPE.none.id
     ).length;
@@ -44,6 +46,7 @@ class BookList extends Component {
                   shelf={SHELF_TYPE[shelfId]}
                   books={books}
                   updateShelf={updateShelf}
+                  toggleSelect={toggleSelect}
                 />
               );
             })}

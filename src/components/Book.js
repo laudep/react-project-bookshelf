@@ -16,11 +16,13 @@ class Book extends Component {
     book: PropTypes.object.isRequired,
     /** All books currently on a shelf. */
     books: PropTypes.array.isRequired,
-    /** Handler for when a book is changed. */
-    updateShelf: PropTypes.func.isRequired
+    /** Handler for when a book's shelf is changed. */
+    updateShelf: PropTypes.func.isRequired,
+    /** Handler for when a book is (de)selected. */
+    toggleSelect: PropTypes.func.isRequired
   };
 
-  state = { isSelected: false };
+  // state = { isSelected: false };
 
   /**
    * Handler for clicks on a book cover image
@@ -29,8 +31,7 @@ class Book extends Component {
    * @memberof Book
    */
   handleClick = event => {
-    this.props.book.isSelected = !!!this.props.book.isSelected;
-    this.props.updateShelf(this.props.book);
+    this.props.toggleSelect(this.props.book.id);
   };
 
   render() {
