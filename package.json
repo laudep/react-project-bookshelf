@@ -33,7 +33,7 @@
   "devDependencies": {
     "eslint-plugin-prettier": "^3.0.0",
     "husky": "^4.2.5",
-    "prettier": "1.15.3",
+    "prettier": "2.0.5",
     "pretty-quick": "^1.8.0"
   }
 }
