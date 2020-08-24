@@ -4,15 +4,15 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.2.2",
-    "babel-loader": "^8.0.4",
+    "babel-loader": "^8.1.0",
     "glamor": "^2.20.40",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
-    "react-debounce-input": "^3.2.0",
+    "react-debounce-input": "^3.2.2",
     "react-dom": "^16.6.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
-    "react-toastify": "^4.5.1"
+    "react-toastify": "^6.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,7 +32,7 @@
   ],
   "devDependencies": {
     "eslint-plugin-prettier": "^3.0.0",
-    "husky": "^1.2.1",
+    "husky": "^4.2.5",
     "prettier": "2.0.5",
     "pretty-quick": "^1.8.0"
   }
