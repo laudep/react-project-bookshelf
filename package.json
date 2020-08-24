@@ -7,7 +7,7 @@
     "babel-loader": "^8.1.0",
     "glamor": "^2.20.40",
     "prop-types": "^15.6.2",
-    "react": "^16.7.0",
+    "react": "^16.13.1",
     "react-debounce-input": "^3.2.0",
     "react-dom": "^16.13.1",
     "react-debounce-input": "^3.2.2",
