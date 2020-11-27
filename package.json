@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.11.4",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.2",
     "glamor": "^2.20.40",
     "prop-types": "^15.6.2",
     "react": "^16.13.1",
